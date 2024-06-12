@@ -21,13 +21,13 @@ public class Product {
 
     @Getter
     @Min(value = 0)
-    private int quantity;
+    private Long quantity;
 
 
     public Product() {
     }
 
-    public Product(String name, Long price,int quantity) {
+    public Product(String name, Long price,Long quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
@@ -37,7 +37,7 @@ public class Product {
         return productId;
     }
 
-    public void update(String name, Long price,int quantity){
+    public void update(String name, Long price,Long quantity){
         this.name = name;
         this.price = price;
         this.quantity = quantity;

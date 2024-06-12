@@ -7,16 +7,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-public class OrderResponseDto {
+public class OrderDetailResponseDto {
     private Long oderId;
-    private Long price;
-    private Long totalPrice;
     private List<OrderProduct> products;
     private LocalDateTime overedAt = LocalDateTime.now();
 
-    public OrderResponseDto(Long oderId ,Long price, List<OrderProduct> products) {
+    public OrderDetailResponseDto(Long oderId , List<OrderProduct> products) {
         this.oderId = oderId;
-        this.price = price;
         this.products = products;
     }
 
