@@ -39,10 +39,10 @@ public class OrderController {
         return orderService.findAllOrder();
     }
 
-    @PatchMapping("/{orderId}")
-    public ResponseEntity<String> cancleOrder(@PathVariable Long orderId){
-        return orderService.cancleOrder(orderId);
-    }
+//    @PatchMapping("/{orderId}")
+//    public ResponseEntity<String> cancleOrder(@PathVariable Long orderId){
+//        return orderService.cancleOrder(orderId);
+//    }
 
 
 

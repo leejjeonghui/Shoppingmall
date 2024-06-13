@@ -55,17 +55,18 @@ public class OrderService {
 
 
     public ResponseEntity<List<OrdersResponseDto>> findAllOrder(){
+
         List<Order> oder = orderRepository.findAll();
-//        List<OrderProduct> orderProducts = oder.stream()
-//                .map(Order::getProducts)
-//                .flatMap(List::stream)
-//                .collect(Collectors.toList());
-//
-//        List<Long> ids = orderProducts.stream().map(p->p.getProductId()).toList();
-//        List<Product> products = productRepository.findAllById(ids);
+        List<OrderProduct> orderProducts = oder.stream()
+                .map(Order::getProducts)
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+
+        List<Long> ids = orderProducts.stream().map(p->p.getProductId()).toList();
+        List<Product> products = productRepository.findAllById(ids);
 
         return ResponseEntity.ok(oder.stream().map(order -> new OrdersResponseDto(
-                order.getId(),getTotalPrice(order.getId()),, OffsetDateTime.now()
+                order.getId(),getTotalPrice(order.getId()),products.stream().map(p->p.getName()).toList(), OffsetDateTime.now()
         )).toList());
 
     }
@@ -77,10 +78,10 @@ public class OrderService {
         return total;
     }
 
-
-    public ResponseEntity<String> cancleOrder(Long id){
-
-    }
+//
+//    public ResponseEntity<String> cancleOrder(Long id) {
+//
+//        }
 
 
 }
