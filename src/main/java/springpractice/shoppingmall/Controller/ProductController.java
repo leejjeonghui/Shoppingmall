@@ -2,6 +2,7 @@ package springpractice.shoppingmall.Controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springpractice.shoppingmall.DTO.ProductDetailResponseDto;
 import springpractice.shoppingmall.DTO.ProductResponseDto;
 import springpractice.shoppingmall.DTO.ProductUpdateDto;
 import springpractice.shoppingmall.DTO.ProductsaveRequestDto;
@@ -29,7 +30,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<ProductResponseDto> findProductById(@PathVariable Long id){
+    ResponseEntity<ProductDetailResponseDto> findProductById(@PathVariable Long id){
         return service.findProductById(id);
     }
 
@@ -38,7 +39,7 @@ public class ProductController {
        return service.findAllProduct();
     }
 
-    @DeleteMapping("/{id}")
+    @PatchMapping("/{id}")
     ResponseEntity<String> deleteProductById(@PathVariable Long id){
     return service.deleteProductById(id);
     }

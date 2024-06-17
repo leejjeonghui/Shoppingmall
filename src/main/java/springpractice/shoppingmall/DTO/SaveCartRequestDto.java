@@ -12,7 +12,8 @@ import java.util.List;
 
 public class SaveCartRequestDto {
    private Long productId;
-    public Long getProductId() {
+    public Long getProductId()
+    {
         return productId;
     }
 }

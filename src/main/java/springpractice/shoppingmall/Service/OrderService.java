@@ -1,5 +1,6 @@
 package springpractice.shoppingmall.Service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import springpractice.shoppingmall.DTO.OrderDetailResponseDto;
@@ -12,12 +13,8 @@ import springpractice.shoppingmall.Repository.OrderRepository;
 import springpractice.shoppingmall.Repository.ProductRepository;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class OrderService {
@@ -78,10 +75,12 @@ public class OrderService {
         return total;
     }
 
-//
-//    public ResponseEntity<String> cancleOrder(Long id) {
-//
-//        }
-
+    @Transactional
+    public ResponseEntity<String> cancleOrder(Long id) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("해당주문이 존재하지 않음"));
+        orderRepository.deleteById(id);
+        return  ResponseEntity.ok("주문이 취소되었습니다.");
+        }
 
 }

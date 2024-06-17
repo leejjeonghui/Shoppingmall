@@ -12,6 +12,7 @@ public class OrderDetailResponseDto {
     private List<OrderProduct> products;
     private LocalDateTime overedAt = LocalDateTime.now();
     private Long totalPrice;
+
     public OrderDetailResponseDto(Long oderId , List<OrderProduct> products,Long totalPrice) {
         this.oderId = oderId;
         this.products = products;

@@ -8,5 +8,5 @@ public class ProductUpdateDto {
     private String name;
     @Min(value = 0 )
     private Long price;
-    private Long quantity;
+    private String seller;
 }

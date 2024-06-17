@@ -10,6 +10,6 @@ public class ProductsaveRequestDto {
     private String name;
     @Min(value = 0,message = "양수만 가능")
     private Long price;
-    @Min(value = 0,message = "양수만 가능")
-    private Long quantity;
+
+    private String seller;
 }
