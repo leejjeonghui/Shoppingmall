@@ -20,8 +20,6 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor
-@SQLDelete(sql = "UPDATE orders SET deleted_at = current_timestamp WHERE id = ?")
-//@SQLDelete 는 JPA를 통해 엔티티 삭제가 발생할 시, delete 쿼리가 아닌 입력한 sql 을 실행시킨다.
 
 public class Order {
     @Id
@@ -32,6 +30,10 @@ public class Order {
     private List<OrderProduct> products = new ArrayList<>();
 
     private OffsetDateTime deleted_at;
+
+    public void deleteOrder() {
+        this.deleted_at = OffsetDateTime.now();
+    }
 
     public Order(List<OrderProduct> products) {
         this.products = products;

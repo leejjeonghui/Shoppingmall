@@ -54,7 +54,7 @@ public class ProductService {
     public ResponseEntity<String> deleteProductById(Long id){
         Product product = productRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당상품이 존저하지 않음"));
-        productRepository.deleteById(id);
+        product.deleteOrder();
         return ResponseEntity.ok("삭제완료.");
     }
 

@@ -79,7 +79,7 @@ public class OrderService {
     public ResponseEntity<String> cancleOrder(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당주문이 존재하지 않음"));
-        orderRepository.deleteById(id);
+        order.deleteOrder();
         return  ResponseEntity.ok("주문이 취소되었습니다.");
         }
 

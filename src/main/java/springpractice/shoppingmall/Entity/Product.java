@@ -46,6 +46,9 @@ public class Product {
         this.price = price;
         this.seller = seller;
     }
+    public void deleteOrder() {
+        this.deleted_at = OffsetDateTime.now();
+    }
 
 //테이블을 만드는 용도로만 사용한다
 
