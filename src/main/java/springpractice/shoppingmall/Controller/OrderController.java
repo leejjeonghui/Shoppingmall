@@ -30,10 +30,11 @@ public class OrderController {
      return orderService.saveOrder(dto);
     }
 
-    @GetMapping ("/{orderId}")
-    public ResponseEntity<OrderDetailResponseDto> findOrder(@PathVariable Long orderId){
-        return orderService.findOrder(orderId);
-    }
+//    @GetMapping ("/{orderId}")
+//    public ResponseEntity<OrderDetailResponseDto> findOrder(@PathVariable Long orderId){
+//        return orderService.findOrder(orderId);
+//    }
+
     @GetMapping ("/all")
     public ResponseEntity <List<OrdersResponseDto>> findOrder(){
         return orderService.findAllOrder();

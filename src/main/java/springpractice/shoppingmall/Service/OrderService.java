@@ -27,29 +27,29 @@ public class OrderService {
     }
 
     public ResponseEntity<String> saveOrder(SaveOrderDto dto) {
-        List<Long> productIds = dto.products().stream().map(p->p.id()).toList();
+        List<Long> productIds = dto.getProductDtos().stream().map(p->p.getProductId()).toList();
                 for (Long productId : productIds) {
             Product product = productRepository.findById(productId).orElse(null);
             if (product == null) {
                 throw new IllegalArgumentException("없는 상품을 주문할 수 없음");
             }
         }
-        Order order = new Order(dto.products().stream().map(p -> new OrderProduct(
-                p.id(),p.price(), (long) p.quantity()))
-                .toList());
-        orderRepository.save(order);
+        Order order = new Order(dto.getProductDtos().stream().map(p ->
+                        new OrderProduct(p.getProductId(),p.getPrice(),p.getQuantity()
+                )).toList());
+                orderRepository.save(order);
         return ResponseEntity.ok("저장완료");
     }
 
-
-    public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
-        OrderDetailResponseDto orderResponse = new OrderDetailResponseDto(order.getId(),order.getProducts(),
-                getTotalPrice(order.getId()));
-        return ResponseEntity.ok(orderResponse);
-    }
-
+////배고파
+//    public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {
+//        Order order = orderRepository.findById(orderId)
+//                .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
+//        OrderDetailResponseDto orderResponse = new OrderDetailResponseDto(order.getId(), ,
+//                getTotalPrice(order.getId()));
+//        return ResponseEntity.ok(orderResponse);
+//    }
+//
 
     public ResponseEntity<List<OrdersResponseDto>> findAllOrder(){
 

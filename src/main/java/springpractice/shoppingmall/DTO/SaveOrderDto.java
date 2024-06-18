@@ -1,14 +1,18 @@
 package springpractice.shoppingmall.DTO;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.util.List;
+@NoArgsConstructor
+@Getter
+public class SaveOrderDto{
+    private List<OrderProductDto> productDtos;
 
-public record SaveOrderDto(List<Product> products) {
-    public record Product(
-            Long id,
-            long price,
-            int quantity
-    ) {
+    public SaveOrderDto(List<OrderProductDto> productDtos) {
+        this.productDtos = productDtos;
     }
+
 }
