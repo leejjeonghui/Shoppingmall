@@ -41,15 +41,19 @@ public class OrderService {
         return ResponseEntity.ok("저장완료");
     }
 
-////배고파
-//    public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {
-//        Order order = orderRepository.findById(orderId)
-//                .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
-//        OrderDetailResponseDto orderResponse = new OrderDetailResponseDto(order.getId(), ,
-//                getTotalPrice(order.getId()));
-//        return ResponseEntity.ok(orderResponse);
-//    }
-//
+    public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
+        List<OrderProductDto> orderProduct = order.getProductList().stream()
+                .map(p -> new OrderProductDto(
+                        p.getId(),
+                        p.getPrice(),
+                        p.getQuantity()))
+                .collect(Collectors.toList());
+        OrderDetailResponseDto orderResponse = new OrderDetailResponseDto(order.getId(),orderProduct,
+                getTotalPrice(order.getId()));
+        return ResponseEntity.ok(orderResponse);
+    }
 
     public ResponseEntity<List<OrdersResponseDto>> findAllOrder(){
 
