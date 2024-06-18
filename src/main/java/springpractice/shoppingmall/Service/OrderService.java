@@ -4,11 +4,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import springpractice.shoppingmall.DTO.OrderDetailResponseDto;
+import springpractice.shoppingmall.DTO.OrderProductDto;
 import springpractice.shoppingmall.DTO.OrdersResponseDto;
 import springpractice.shoppingmall.DTO.SaveOrderDto;
 import springpractice.shoppingmall.Entity.Order;
 import springpractice.shoppingmall.Entity.OrderProduct;
 import springpractice.shoppingmall.Entity.Product;
+import springpractice.shoppingmall.Repository.OrderProductRepository;
 import springpractice.shoppingmall.Repository.OrderRepository;
 import springpractice.shoppingmall.Repository.ProductRepository;
 
@@ -20,8 +22,9 @@ import java.util.stream.Collectors;
 public class OrderService {
     OrderRepository orderRepository;
     ProductRepository productRepository;
+    OrderProductRepository orderProductRepository;
 
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository) {
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, OrderProductRepository orderProductRepository) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
     }
@@ -41,15 +44,20 @@ public class OrderService {
         return ResponseEntity.ok("저장완료");
     }
 
-////배고파
-//    public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {
-//        Order order = orderRepository.findById(orderId)
-//                .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
-//        OrderDetailResponseDto orderResponse = new OrderDetailResponseDto(order.getId(), ,
-//                getTotalPrice(order.getId()));
-//        return ResponseEntity.ok(orderResponse);
-//    }
-//
+
+    public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
+        List<OrderProductDto> orderProduct = order.getProductList().stream()
+                .map(p -> new OrderProductDto(
+                        p.getId(),
+                        p.getPrice(),
+                        p.getQuantity()))
+                .collect(Collectors.toList());
+        OrderDetailResponseDto orderResponse = new OrderDetailResponseDto(order.getId(),orderProduct,
+                getTotalPrice(order.getId()));
+        return ResponseEntity.ok(orderResponse);
+    }
 
     public ResponseEntity<List<OrdersResponseDto>> findAllOrder(){
 

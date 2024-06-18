@@ -21,7 +21,7 @@ public class Order {
     @ElementCollection
     private List<OrderProduct> productList = new ArrayList<>();
 
-    @ManyToOne
+    @OneToMany(mappedBy = "order")
     private List<OrderProduct> products = new ArrayList<>();
 
     private OffsetDateTime deleted_at;
