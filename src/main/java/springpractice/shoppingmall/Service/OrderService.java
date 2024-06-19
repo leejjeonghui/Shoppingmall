@@ -51,7 +51,6 @@ public class OrderService {
             //따라서 OrderProduct들이 어떤 Order에 속하는것인지 setter로 지정해줘야한다
 
                 orderRepository.save(order);
-
         return ResponseEntity.ok("저장완료");
     }
 

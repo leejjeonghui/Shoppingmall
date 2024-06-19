@@ -1,5 +1,6 @@
 package springpractice.shoppingmall.DTO;
 
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 
 import java.time.LocalDate;

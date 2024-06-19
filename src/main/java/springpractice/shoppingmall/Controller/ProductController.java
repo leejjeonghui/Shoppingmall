@@ -1,5 +1,6 @@
 package springpractice.shoppingmall.Controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springpractice.shoppingmall.DTO.ProductDetailResponseDto;
@@ -25,7 +26,7 @@ public class ProductController {
     }
 
     @PostMapping("/")
-    ResponseEntity<String> saveProduct(@RequestBody ProductsaveRequestDto request){
+    ResponseEntity<String> saveProduct(@Valid @RequestBody ProductsaveRequestDto request){
         return service.saveProduct(request);
     }
 
@@ -48,5 +49,5 @@ public class ProductController {
     ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody ProductUpdateDto dto){
         return service.updateProductById(id,dto);
     }
-
+//컨트롤러에서는 외부데이터만 검사하고 나머지 로직은 서비스에서..?
 }

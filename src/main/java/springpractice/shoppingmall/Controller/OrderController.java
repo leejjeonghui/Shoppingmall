@@ -1,5 +1,6 @@
 package springpractice.shoppingmall.Controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springpractice.shoppingmall.DTO.OrderDetailResponseDto;
@@ -26,7 +27,7 @@ public class OrderController {
     }
 
     @RequestMapping("/")
-    public ResponseEntity<String> saveOrder(@RequestBody SaveOrderDto dto){
+    public ResponseEntity<String> saveOrder(@Valid @RequestBody SaveOrderDto dto){
      return orderService.saveOrder(dto);
     }
 
@@ -45,6 +46,6 @@ public class OrderController {
         return orderService.cancleOrder(orderId);
     }
 
-
+//validation 쓰면 컨트롤러에서 이상한 값이 들어오는걸 막아줌
 
 }

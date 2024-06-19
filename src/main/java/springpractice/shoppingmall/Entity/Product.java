@@ -2,13 +2,11 @@ package springpractice.shoppingmall.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
-
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Getter
 @NoArgsConstructor
@@ -20,7 +18,6 @@ public class Product {
 
     private String name;
 
-    @Min(value = 0)
     private Long price;
 
     private String seller;
