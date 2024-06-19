@@ -4,15 +4,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import springpractice.shoppingmall.Entity.OrderProduct;
 
 import java.util.List;
 @NoArgsConstructor
 @Getter
 public class SaveOrderDto{
-    private List<OrderProductDto> productDtos;
+    private List<OrderProduct> products;
 
-    public SaveOrderDto(List<OrderProductDto> productDtos) {
-        this.productDtos = productDtos;
+    public SaveOrderDto(List<OrderProduct> products) {
+        this.products = products;
     }
 
 }

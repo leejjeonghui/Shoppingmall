@@ -18,10 +18,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ElementCollection
-    private List<OrderProduct> productList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order")
+//    private List<OrderProduct> productList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderProduct> products = new ArrayList<>();
 
     private OffsetDateTime deleted_at;
@@ -29,7 +29,7 @@ public class Order {
     public void deleteOrder() {
         this.deleted_at = OffsetDateTime.now();
     }
-    public Order(List<OrderProduct> productList) {
-        this.productList = productList;
+    public Order(List<OrderProduct> products) {
+        this.products = products;
     }
 }

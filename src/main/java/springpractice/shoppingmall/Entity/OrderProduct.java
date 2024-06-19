@@ -1,10 +1,9 @@
 package springpractice.shoppingmall.Entity;
-
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import springpractice.shoppingmall.DTO.OrderProductDto;
+import lombok.Setter;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -16,6 +15,7 @@ public class OrderProduct {
     private Long price; // 상품 가격에서 할인된 가격으로 주문했을 수도 있음
     private Long quantity;
 
+    @Setter
     @ManyToOne
     private Order order;
 
