@@ -1,22 +1,14 @@
 package springpractice.shoppingmall.Service;
-
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import springpractice.shoppingmall.DTO.*;
-import springpractice.shoppingmall.Entity.DeliveryChargeType;
 import springpractice.shoppingmall.Entity.Product;
 import springpractice.shoppingmall.Entity.ProductOption;
 import springpractice.shoppingmall.Repository.ProductRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ProductService {
@@ -30,8 +22,8 @@ public class ProductService {
         Product product = new Product(request.getName(), request.getPrice(),
                 request.getSeller(),request.getBrand(),
                 request.getDeliveryChargeType());
-
-        for (ProductOption productOption: request.getOptions()) {
+        for (ProductOptionsDto dto: request.getOptions()) {
+            ProductOption productOption = new ProductOption(dto.getOptionType(), dto.getOptionValue(), dto.getMaximumBuyCount());
             product.addOption(productOption);
         }
         productRepository.save(product);
@@ -53,15 +45,6 @@ public class ProductService {
                 );
         return ResponseEntity.ok(dto);
     }
-//    private String name;
-//    private Long price;
-//    private String brand;
-//    private String seller;
-//    private Long productId;
-//    private DeliveryChargeType deliveryChargeType;
-//    private List<ProductOption> options = new ArrayList<>();
-//    private LocalDate deliveryETA = LocalDate.now().plusDays(2);
-//    private LocalDate createdAt;
 
 
     public ResponseEntity<List<ProductResponseDto>> findAllProduct(){
@@ -86,7 +69,7 @@ public class ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당상품이 존저하지 않음"));
         product.deleteOrder();
-        return ResponseEntity.ok("삭제완료.");
+        return ResponseEntity.ok("삭제성공.");
     }
 
     @Transactional

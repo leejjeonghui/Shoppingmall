@@ -14,7 +14,7 @@ import springpractice.shoppingmall.Service.ProductService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 public class ProductController {
     //상품등록, 상품조회(all), 상품조회(상세조회 id), 상품수정, 삭제
     ProductRepository repository;
@@ -49,6 +49,6 @@ public class ProductController {
     ResponseEntity<String> updateProduct(@PathVariable Long id, @RequestBody ProductUpdateDto dto){
         return service.updateProductById(id,dto);
     }
-//컨트롤러에서는 외부데이터만 검사하고 나머지 로직은 서비스에서..?
+//컨트롤러에서는 외부데이터만 검사
 
 }

@@ -31,18 +31,22 @@ public class OrderService {
         this.orderProductRepository = orderProductRepository;
     }
 
-//    public ResponseEntity<String> saveOrder(SaveOrderDto dto) {
-//        List<Long> productIds = dto.getProducts().stream().map(p->p.getProductId()).toList();
-//                for (Long productId : productIds) {
-//            Product product = productRepository.findById(productId).orElse(null);
-//            if (product == null) {
-//                throw new IllegalArgumentException("없는 상품을 주문할 수 없음");
-//            }
-//        }
-//
-//                orderRepository.save(order);
-//        return ResponseEntity.ok("저장완료");
-//    }
+    public ResponseEntity<String> saveOrder(SaveOrderDto dto) {
+        List<Long> productIds = dto.getProducts().stream().map(p->p.getProductId()).toList();
+                for (Long productId : productIds) {
+            Product product = productRepository.findById(productId).orElse(null);
+            if (product == null) {
+                throw new IllegalArgumentException("없는 상품을 주문할 수 없음");
+            }
+        }
+                Order order = new Order();
+                for(OrderProductDto orderProduct: dto.getProducts()){
+                    OrderProduct product = new OrderProduct(orderProduct.getProductId(), orderProduct.getPrice(), orderProduct.getQuantity());
+                    order.addOrderProduct(product);
+                }
+                orderRepository.save(order);
+                return ResponseEntity.ok("저장됨");
+    }
 
 
     public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {

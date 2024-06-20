@@ -10,9 +10,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class SaveOrderDto{
-    private List<OrderProduct> products;
+    private List<OrderProductDto> products;
 
-    public SaveOrderDto(List<OrderProduct> products) {
+    public SaveOrderDto(List<OrderProductDto> products) {
         this.products = products;
     }
 
