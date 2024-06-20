@@ -50,4 +50,5 @@ public class ProductController {
         return service.updateProductById(id,dto);
     }
 //컨트롤러에서는 외부데이터만 검사하고 나머지 로직은 서비스에서..?
+
 }

@@ -31,28 +31,18 @@ public class OrderService {
         this.orderProductRepository = orderProductRepository;
     }
 
-    public ResponseEntity<String> saveOrder(SaveOrderDto dto) {
-        List<Long> productIds = dto.getProducts().stream().map(p->p.getProductId()).toList();
-                for (Long productId : productIds) {
-            Product product = productRepository.findById(productId).orElse(null);
-            if (product == null) {
-                throw new IllegalArgumentException("없는 상품을 주문할 수 없음");
-            }
-        }
-                List <OrderProduct> orderProducts = dto.getProducts().stream().map(p->
-                        new OrderProduct(p.getProductId(),p.getPrice(),p.getQuantity())).toList();
-
-                Order order = new Order(orderProducts);
-                for(OrderProduct orderProduct : orderProducts){
-                orderProduct.setOrder(order);
-                }
-            //위에 두 줄 안쓰고 repository.saveAll 하고 리스트로 저장한 다음에 디버깅 해보면...
-            //오더프로덕트의 오더 아이디가 널 값으로 들어간다. 그래서 오더를 조회하면 오더프로덕트가 안나옴.
-            //따라서 OrderProduct들이 어떤 Order에 속하는것인지 setter로 지정해줘야한다
-
-                orderRepository.save(order);
-        return ResponseEntity.ok("저장완료");
-    }
+//    public ResponseEntity<String> saveOrder(SaveOrderDto dto) {
+//        List<Long> productIds = dto.getProducts().stream().map(p->p.getProductId()).toList();
+//                for (Long productId : productIds) {
+//            Product product = productRepository.findById(productId).orElse(null);
+//            if (product == null) {
+//                throw new IllegalArgumentException("없는 상품을 주문할 수 없음");
+//            }
+//        }
+//
+//                orderRepository.save(order);
+//        return ResponseEntity.ok("저장완료");
+//    }
 
 
     public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {

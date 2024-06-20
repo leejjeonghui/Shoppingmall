@@ -18,9 +18,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-//    private List<OrderProduct> productList = new ArrayList<>();
-
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderProduct> products = new ArrayList<>();
 
@@ -31,5 +28,10 @@ public class Order {
     }
     public Order(List<OrderProduct> products) {
         this.products = products;
+    }
+
+    public void addOrderProduct(OrderProduct orderProduct){
+        products.add(orderProduct);
+        orderProduct.setOrder(this);
     }
 }
