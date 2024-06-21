@@ -12,8 +12,4 @@ public class OrderTest {
     @Autowired
     OrderRepository orderRepository;
 
-    @Test
-    void saveOrder(){
-
-    }
 }

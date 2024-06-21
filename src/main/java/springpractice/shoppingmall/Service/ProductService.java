@@ -19,11 +19,16 @@ public class ProductService {
     }
 
     public ResponseEntity<String> saveProduct(ProductsaveRequestDto request){
-        Product product = new Product(request.getName(), request.getPrice(),
-                request.getSeller(),request.getBrand(),
+        Product product = new Product(request.getName(),
+                request.getPrice(),
+                request.getSeller(),
+                request.getBrand(),
                 request.getDeliveryChargeType());
         for (ProductOptionsDto dto: request.getOptions()) {
-            ProductOption productOption = new ProductOption(dto.getOptionType(), dto.getOptionValue(), dto.getMaximumBuyCount());
+            ProductOption productOption = new ProductOption(
+                    dto.getOptionType(),
+                    dto.getOptionValue(),
+                    dto.getMaximumBuyCount());
             product.addOption(productOption);
         }
         productRepository.save(product);
@@ -35,13 +40,18 @@ public class ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(()->new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
         ProductDetailResponseDto dto = new ProductDetailResponseDto(
-                product.getName(), product.getPrice(),product.getBrand(),
-                product.getSeller(),product.getId(), product.getDeliveryChargeType(),
-                product.getOptions().stream().map(o->
+                product.getName(), product.getPrice(),
+                product.getBrand(), product.getSeller(),
+                product.getId(), product.getDeliveryChargeType(),
+                product.getOptions().
+                        stream().map(o->
                         new ProductOptionsDto(
-                        o.getOptionType(),o.getOptionValue(),o.getMaximumBuyCount()
+                                o.getOptionType(),
+                                o.getOptionValue(),
+                                o.getMaximumBuyCount()
                         )).toList(),
-                LocalDate.now().plusDays(2),LocalDate.now()
+                LocalDate.now().plusDays(2),
+                LocalDate.now()
                 );
         return ResponseEntity.ok(dto);
     }
@@ -67,7 +77,7 @@ public class ProductService {
 
     public ResponseEntity<String> deleteProductById(Long id){
         Product product = productRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("해당상품이 존저하지 않음"));
+                .orElseThrow(()-> new IllegalArgumentException("해당상품이 존저하지 않음"));
         product.deleteOrder();
         return ResponseEntity.ok("삭제성공.");
     }
@@ -75,7 +85,9 @@ public class ProductService {
     @Transactional
     public ResponseEntity<String> updateProductById(Long id, ProductUpdateDto dto){
         Product product = productRepository.findById(id).orElse(null);
-        product.update(dto.getName(),dto.getPrice(),dto.getSeller(),dto.getBrand(),dto.getDeliveryChargeType());
+        product.update(dto.getName(),
+                dto.getPrice(),dto.getSeller(),
+                dto.getBrand(),dto.getDeliveryChargeType());
         productRepository.save(product);
         return ResponseEntity.ok("수정완료. 상품 id : " + product.getId());
     }
