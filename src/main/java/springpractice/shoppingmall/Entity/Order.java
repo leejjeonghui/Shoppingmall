@@ -3,6 +3,7 @@ package springpractice.shoppingmall.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -21,7 +22,14 @@ public class Order {
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderProduct> products = new ArrayList<>();
 
+    @OneToOne
+    private Delivery delivery;
+
     private OffsetDateTime deleted_at;
+
+    @Setter
+    @ManyToOne
+    private User user;
 
     public void deleteOrder() {
         this.deleted_at = OffsetDateTime.now();

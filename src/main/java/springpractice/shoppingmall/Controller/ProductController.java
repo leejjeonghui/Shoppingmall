@@ -3,14 +3,12 @@ package springpractice.shoppingmall.Controller;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springpractice.shoppingmall.DTO.ProductDetailResponseDto;
-import springpractice.shoppingmall.DTO.ProductResponseDto;
-import springpractice.shoppingmall.DTO.ProductUpdateDto;
-import springpractice.shoppingmall.DTO.ProductsaveRequestDto;
+import springpractice.shoppingmall.DTO.*;
 import springpractice.shoppingmall.Entity.Product;
 import springpractice.shoppingmall.Repository.ProductRepository;
 import springpractice.shoppingmall.Service.ProductService;
 
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 
 @RestController
@@ -26,7 +24,7 @@ public class ProductController {
     }
 
     @PostMapping("/")
-    ResponseEntity<String> saveProduct(@Valid @RequestBody ProductsaveRequestDto request){
+    ResponseEntity<String> saveProduct(@Valid @RequestBody ProductsaveRequestDto request) throws NoSuchObjectException {
         return service.saveProduct(request);
     }
 
@@ -41,8 +39,8 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    ResponseEntity<String> deleteProductById(@PathVariable Long id){
-    return service.deleteProductById(id);
+    ResponseEntity<String> deleteProduct(@RequestBody ProductDeleteDto dto) throws NoSuchObjectException {
+    return service.deleteProduct(dto);
     }
 
     @PutMapping("/{id}")

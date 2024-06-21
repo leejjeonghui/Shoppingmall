@@ -5,23 +5,35 @@ import org.springframework.stereotype.Service;
 import springpractice.shoppingmall.DTO.*;
 import springpractice.shoppingmall.Entity.Product;
 import springpractice.shoppingmall.Entity.ProductOption;
+import springpractice.shoppingmall.Entity.User;
 import springpractice.shoppingmall.Repository.ProductRepository;
+import springpractice.shoppingmall.Repository.UserRepository;
 
+import java.rmi.NoSuchObjectException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ProductService {
     private  ProductRepository productRepository;
+    private final UserRepository userRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
-    public ResponseEntity<String> saveProduct(ProductsaveRequestDto request){
-        Product product = new Product(request.getName(),
+    public ResponseEntity<String> saveProduct(ProductsaveRequestDto request) throws NoSuchObjectException {
+        User user = userRepository.getReferenceById(request.getUserId());
+        if(!userRepository.existsById(request.getUserId())){
+            throw new NoSuchObjectException("회원만 상품 등록 가능");
+        }
+        Product product = new Product(
+                request.getName(),
                 request.getPrice(),
-                request.getSeller(),
+                user.getName(),
                 request.getBrand(),
                 request.getDeliveryChargeType());
         for (ProductOptionsDto dto: request.getOptions()) {
@@ -31,6 +43,8 @@ public class ProductService {
                     dto.getMaximumBuyCount());
             product.addOption(productOption);
         }
+        
+        product.setUser(user);
         productRepository.save(product);
         return ResponseEntity.ok("상품저장완료. id: "+product.getId());
     }
@@ -75,9 +89,12 @@ public class ProductService {
 
     }
 
-    public ResponseEntity<String> deleteProductById(Long id){
-        Product product = productRepository.findById(id)
+    public ResponseEntity<String> deleteProduct(ProductDeleteDto dto) throws NoSuchObjectException {
+        Product product = productRepository.findById(dto.productId())
                 .orElseThrow(()-> new IllegalArgumentException("해당상품이 존저하지 않음"));
+        if(!Objects.equals(product.getUser().getId(), dto.userId())){
+            throw new NoSuchObjectException("다른 유저가 등록한 상품을 삭제할 수 없습니다.");
+        }
         product.deleteOrder();
         return ResponseEntity.ok("삭제성공.");
     }

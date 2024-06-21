@@ -11,9 +11,11 @@ import java.util.List;
 @Getter
 public class SaveOrderDto{
     private List<OrderProductDto> products;
+    private Long userId;
 
-    public SaveOrderDto(List<OrderProductDto> products) {
+    public SaveOrderDto(List<OrderProductDto> products,Long userId) {
         this.products = products;
-    }
+        this.userId = userId;
 
+    }
 }

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductOption> options = new ArrayList<>();
 
+    @Setter
+    @ManyToOne
+    private User user;
 
     public Product(String name, Long price,String seller,String brand,DeliveryChargeType deliveryChargeType) {
         this.name = name;
