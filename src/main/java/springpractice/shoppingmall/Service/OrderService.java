@@ -43,7 +43,6 @@ public class OrderService {
         for (OrderProductDto orderProduct : dto.getProducts()) {
             OrderProduct product = new OrderProduct(
                     orderProduct.getProductId(),
-                    orderProduct.getPrice(),
                     orderProduct.getQuantity());
                     order.addOrderProduct(product);
         }
@@ -56,8 +55,8 @@ public class OrderService {
 
     public ResponseEntity<OrderDetailResponseDto> findOrder(Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new IllegalArgumentException("해당 주문이 존재하지 않습니다."));
-        List<OrderProductDto> orderProduct = order.getProducts().stream().map(p -> new OrderProductDto(p.getId(), p.getPrice(), p.getQuantity())).toList();
-        OrderDetailResponseDto orderResponse = new OrderDetailResponseDto(order.getId(), orderProduct, getTotalPrice(order.getId()),order.getUser().getId());
+        List<OrderProductDto> orderProduct = order.getProducts().stream().map(p -> new OrderProductDto(p.getId(), p.getQuantity())).toList();
+        OrderDetailResponseDto orderResponse = new OrderDetailResponseDto(order.getId(), orderProduct,order.getUser().getId());
         return ResponseEntity.ok(orderResponse);
     }
 
@@ -71,17 +70,17 @@ public class OrderService {
 
         return ResponseEntity.ok(oder.stream().map(order ->
                 new OrdersResponseDto(
-                        order.getId(), getTotalPrice(order.getId()),
+                      order.getId(),// getTotalPrice(order.getId()),
                         products.stream().map(p -> p.getName()).toList(), OffsetDateTime.now())).toList());
 
     }
 
 
-    public Long getTotalPrice(Long id) {
-        Order order = orderRepository.findById(id).orElse(null);
-        Long total = order.getProducts().stream().mapToLong(p -> p.getQuantity() * p.getPrice()).sum();
-        return total;
-    }
+//    public Long getTotalPrice(Long id) {
+//        Order order = orderRepository.findById(id).orElse(null);
+//        Long total = order.getProducts().stream().mapToLong(p -> p.getQuantity() * p.getPrice()).sum();
+//        return total;
+//    }
 
     @Transactional
     public ResponseEntity<String> cancleOrder(Long orderId) {

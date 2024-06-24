@@ -89,6 +89,7 @@ public class ProductService {
 
     }
 
+    @Transactional
     public ResponseEntity<String> deleteProduct(ProductDeleteDto dto) throws NoSuchObjectException {
         Product product = productRepository.findById(dto.productId())
                 .orElseThrow(()-> new IllegalArgumentException("해당상품이 존저하지 않음"));

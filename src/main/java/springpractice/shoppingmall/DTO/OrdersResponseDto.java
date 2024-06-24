@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public record OrdersResponseDto(Long orderId,
-                                Long totalPrice,
+//                                Long totalPrice,
                                 List<String> productNames,
                                 OffsetDateTime orderedAt) {
 }

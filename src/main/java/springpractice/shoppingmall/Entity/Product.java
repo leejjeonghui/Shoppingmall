@@ -33,7 +33,7 @@ public class Product {
 
     private String  brand;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<ProductOption> options = new ArrayList<>();
 
     @Setter
